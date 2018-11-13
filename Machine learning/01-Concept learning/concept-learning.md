@@ -2,7 +2,7 @@
 
 ## Definizione
 
-Il problema del concept learning può essere definito come il problema di inferire attraverso uno spazio predefinito di potenziali ipotesi l'ipotesi che meglio fitta gli esempi di training.
+Il problema del concept learning può essere definito come il problema di inferire, dato uno spazio predefinito di potenziali ipotesi, l'ipotesi che meglio fitta gli esempi di training.
 
 ## Notazione
 
@@ -27,10 +27,11 @@ Attributi $A_i \in \{1,2,3\}$, con $i \in \{1,2,3\}$
 ## Performance evaluation
 
 Matrice di confusione:
-|              | Positive | Negative |
-| ------------ | -------- | -------- |
-| **Positive** | $TP$     | ${FP}$   |
-| **Negative** | $FN$     | ${TN}$   |
+| &nbsp;              | &nbsp;     | >          | **True label** |
+| :-----------------: | :--------: | :--------: | :------------: |
+| &nbsp;              | &nbsp;     | *Positive* | *Negative*     |
+| **Predicetd label** | *Positive* | $TP$       | $FP$           |
+| ^                   | *Negative* | $FN$       | $TN$           |
 
 Dove:
 
@@ -41,11 +42,11 @@ Dove:
 
 Indici di performance:
 
-* Sensitivity = $\frac{TP}{TP+FN}$, ovvero $p(y = 1|x = 1)$
-* Specificity = $\frac{TN}{FP+TN}$, ovvero $p(y=0|x=0)$
-* Positive predictive value (PPV) = $\frac{TP}{TP+FP}$, ovvero $p(x=1|y=1)$
-* Negative predictive value (NPV) = $\frac{TN}{TN+FN}$, ovvero $p(x=0|y=0)$
-* Accuracy = $\frac{TP+TN}{TP+FP+TN+FN}$, ovvero $p(y =  x)$
+* **Sensitivity** = $\frac{TP}{TP+FN}$, ovvero $p(y = 1|x = 1)$
+* **Specificity** = $\frac{TN}{FP+TN}$, ovvero $p(y=0|x=0)$
+* **Positive predictive value (PPV)** = $\frac{TP}{TP+FP}$, ovvero $p(x=1|y=1)$
+* **Negative predictive value (NPV)** = $\frac{TN}{TN+FN}$, ovvero $p(x=0|y=0)$
+* **Accuracy** = $\frac{TP+TN}{TP+FP+TN+FN}$, ovvero $p(y =  x)$
 
 Dove $x$ rappresenta la vera classe d'appartenenza, mentre $y$ rappresenta la classe predetta
 
@@ -147,7 +148,7 @@ dove
 In altre parole $S$ e $G​$ fungono da lower e upper bound rispettivamente per le possibili ipotesi candidate.
 L'algoritmo è il seguente:
 
-![candidate elimination](./images/cand-elim.png)
+![candidate elimination](../images/cand-elim.png)
 
 ### Esempio
 
