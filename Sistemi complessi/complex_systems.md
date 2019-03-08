@@ -26,11 +26,11 @@ Ad esempio, sia A = {0, 1}. Siano $x,y \in A^{\mathbb{Z}}$ tali che:
 * $x = (...\ 1_{-3}\ 1_{-2}\ 0_{-1}\ 1_0\ 1_1\ 0_2\ 1_3\ ...)$
 * $y = (...\ 0_{-3}\ 1_{-2}\ 0_{-1}\ 1_0\ 1_1\ 0_2\ 1_3\ ...)$
 
-dove al pedice sono rappresentate le posizioni delle celle, allora in questo caso $n = 3$, poiché $i = -3$ è la prima posizione (quella più piccola) in cui le due stringhe bi-infinite differiscono. 
+dove al pedice sono rappresentate le posizioni delle celle, allora in questo caso $n = 3$, poiché $i = -3$ è la prima posizione (quella più piccola) in cui le due stringhe bi-infinite differiscono.
 
 Vale inoltre la seguente proposizione:
-
-> $$\forall x,y \in A^{\mathbb{Z}}, \forall n \in \mathbb{N},\ d(x,y) < \frac{1}{2^n} \Longleftrightarrow x_{[-n,\ n]} = y_{[-n,\ n]}$$ dove con $a_{[-n,\ n]} \subset a \in A^{\mathbb{Z}} = (a_{-n}\ a_{-n+1}\ ...\ a_{-2}\ a_{-1}\ a_0\ a_1\ a_2\ ...\ a_{n-1}\ a_n)$ si indica la "finestra" della stringa bi-infinita $a$, di raggio $n$ e centrata nello 0.
+> $$\forall x,y \in A^{\mathbb{Z}}, \forall n \in \mathbb{N},\ d(x,y) < \frac{1}{2^n} \Longleftrightarrow x_{[-n,\ n]} = y_{[-n,\ n]}$$
+> dove con $a_{[-n,\ n]} \subset a \in A^{\mathbb{Z}} = (a_{-n}\ a_{-n+1}\ ...\ a_{-2}\ a_{-1}\ a_0\ a_1\ a_2\ ...\ a_{n-1}\ a_n)$ si indica la "finestra" della stringa bi-infinita $a$, di raggio $n$ e centrata nello 0.
 
 Dimostrazione:
 
@@ -40,7 +40,7 @@ Dimostrazione:
   Infatti $x_{[-n,\ n]} = y_{[-n,\ n]} \Longrightarrow \exists m \in \mathbb{N}, m > n : x_{-m} \ne y_{-m} \lor x_m \ne y_m$. Sia $\overline{m}$ il più piccolo tra essi, allora $d(x,y) = \frac{1}{2^{\overline{m}}} < \frac{1}{2^n}$
   Se tale $m$ non esiste allora $d(x,y) = 0 < \frac{1}{2^n}$.
 
->Definiamo dunque un **automa cellulare** come una tripla $\langle A, r, f\rangle$ tale che:
+>Definiamo dunque un **automa cellulare 1-D** come una tripla $\langle A, r, f\rangle$ tale che:
 >
 >* A è un insieme finito di simboli, rappresentanti i possibili **stati** assumibili dall'AC
 >* $r \in \mathbb{N}$ è detto **raggio**
@@ -53,15 +53,62 @@ Una regola locale può essere fornita in forma tabellare (si pensi ad una funzio
 * A = {0, 1}
 * r = 1
 * $f:A^3 \rightarrow A$ così definita:
-    | a | b | c | $f$ |
-    |---|---|---|---|
-    | 0 | 0 | 0 | 0 |
-    | 0 | 0 | 1 | 0 |
-    | 0 | 1 | 0 | 0 |
-    | 0 | 1 | 1 | 1 |
-    | 1 | 0 | 0 | 1 |
-    | 1 | 0 | 1 | 1 |
-    | 1 | 1 | 0 | 0 |
-    | 1 | 1 | 1 | 1 |
 
-Se $A = \{0, 1, 2, ..., n\} \subset \mathbb{N}$ e $A$ è finito, questa stessa regola locale può essere invece fornita come la conversione in base $|A|$ dell'ultima colonna di tale tabella, con la cifra più significativa in ultima posizione. In questo caso avremo: $0 \cdot 2^0 + 0 \cdot 2^1 + 0 \cdot 2^2 + 1 \cdot 2^3 + 1 \cdot 2^4 + 1 \cdot 2^5 + 0 \cdot 2^6 + 1 \cdot 2^7$
+<center>
+| a | b | c | $f$ |
+|---|---|---|-----|
+| 0 | 0 | 0 | 0 |
+| 0 | 0 | 1 | 0 |
+| 0 | 1 | 0 | 0 |
+| 0 | 1 | 1 | 1 |
+| 1 | 0 | 0 | 1 |
+| 1 | 0 | 1 | 1 |
+| 1 | 1 | 0 | 0 |
+| 1 | 1 | 1 | 1 |
+</center>
+
+Se $A = \{0, 1, 2, ..., n\} \subset \mathbb{N}$ e $A$ è finito, questa stessa regola locale può essere invece fornita come la conversione in base $|A|$ dell'ultima colonna di tale tabella, con la cifra più significativa in ultima posizione, ammesso che le combinazioni di possibili tuple siano fornite, in ordine, dalla più piccola alla più grande.
+Ovvero, data la funzione d'aggiornamento locale $f$, definiamo $n_f = \sum_{i=0}^{|A|^{2r+1}-1}a_i \cdot |A|^i$, con $a_i \in A$ elemento i-esimo della tabella.
+In questo caso avremo: $n_f = \sum_{i=0}^{2^3-1}a_i \cdot 2^i = 0 \cdot 2^0 + 0 \cdot 2^1 + 0 \cdot 2^2 + 1 \cdot 2^3 + 1 \cdot 2^4 + 1 \cdot 2^5 + 0 \cdot 2^6 + 1 \cdot 2^7$
+Abbiamo detto che un AC evolve nel tempo in maniera uniforme, ovvero, per ogni istante di tempo, la stessa regola locale viene applicata a tutte le celle dell'automa.
+Definiamo dunque la **regola globale di un AC 1-D**:
+
+>Dato $\langle A,r,f \rangle$ AC, la **regola globale** è la funzione $F:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}, \forall x \in A^{\mathbb{Z}}, \forall i \in \mathbb{Z}$ 
+>$$F(x)_i = f(x_{i-r},\ ...\ ,\ x_i,...\ ,\ x_{i+r}) = f(x_{[i-r, i+r]})$$
+>dove $f(x_{[i-r, i+r]})$ al solito si intende la finestra della stringa $x$, di ampiezza $r$ e centrata in $i$
+
+L'applicazione di $F\ \forall i \in \mathbb{Z}$ è un aggiornamento dello stato di un AC di tipo:
+
+* **Sincrono**
+* **Parallelo**, in quanto ottengo il nuovo stato sulla base di quello vecchio, dunque posso applicare la $F$ in parallelo a tutte le celle di una configurazione ad un determinato tempo $t$
+* **Locale**, in quanto l'aggiornamento viene effettuato sulla base di un numero finito e fissato di vicini della cella i-esima, ovvero nel *cono* $[i-r,i+r]$
+* **Uniforme** perchè viene applicata sempre la stessa regola locale per aggiornare tutte le $i \in \mathbb{Z}$ celle
+
+Definiamo ora una particolare funzione d'interesse, ovvero la funzione **SHIFT** (a sinistra):
+
+>Dato un AC $\langle A,r,f \rangle$, la funzione $\text{SHIFT}:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}$ è tale che $\forall x \in A^{\mathbb{Z}}, \forall i \in \mathbb{Z}, \text{SHIFT}(x)_i = x_{i+1}$
+
+Possiamo dunque dare ora una definizione alternativa di AC, ovvero:
+
+>Un automa cellulare è una funzione $F:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}$ tale che $F$ è **continua** e $\text{SHIFT} \circ F = F \circ \text{SHIFT}$, ovvero si dice che **commuta con lo SHIFT**.
+La funzione SHIFT verrà indicata d'ora in avanti con il simbolo $\sigma$
+
+E' naturale chiedersi a questo punto quali condizioni deve soddisfare una funzione $F:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}$ tale da essere la regola globale di un automa cellulare.
+Tali condizioni ci vengono fornite dal **teorema di Hedlund**:
+
+>Sia $F:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}$ una qualsiasi funzione. $F$ è la regola globale di un AC $\iff\ F$ è continua $\land$ $F \circ \sigma = \sigma \circ F$
+
+Dimostrazione:
+
+* $\Longrightarrow$
+  Suppongo $F$ sia la regola globale di un AC $\langle A,r,f \rangle$. Voglio dimostrare che $F$ è continua, ovvero $\forall x \in A^{\mathbb{Z}},\ F$ è **continua in x** se $\forall x \in A^{\mathbb{Z}}, \forall \epsilon > 0, \exists \delta > 0:\forall y \in A^{\mathbb{Z}}, d(x,y) < \delta \implies d(f(x), f(y)) < \epsilon$.
+  Scelti arbitrariamente $x \in A^{\mathbb{Z}}, \epsilon > 0$, allora esiste sempre un $n \in \mathbb{N}:\frac{1}{2^n} < \epsilon$.
+  Voglio dimostrare che $d(F(x),F(y)) < \frac{1}{2^n} < \epsilon$, che è come dimostare che $F(x_{[-n,n]})=F(y_{[-n,n]})$.
+  Dalla definizione di regola globale di un AC sappiamo che $F(x_{[-n,n]})$ dipende unicamente da $x_{[-n-r,n+r]}$. Dunque scegliendo $\delta = \frac{1}{2^{n+r}}$, per il teorema della distanza, si avrà che $x_{[-n-r,n+r]}=y_{[-n-r,n+r]} \iff d(x,y) < \delta = \frac{1}{2^{n+r}}$, dunque a maggior ragione vale che $x_{[-n,n]}=y_{[-n,n]}$ e quindi $F(x_{[-n,n]})=F(y_{[-n,n]})$.
+  $F$ è inoltre **uniformemente continua**, in quanto $\delta$ dipende da n e quindi da $\epsilon$, ma non da $x$.
+  Dimostriamo ora che $F$ commuta con lo SHIFT, ovvero che $F \circ \sigma = \sigma \circ F$. Infatti, $\forall x \in A^{\mathbb{Z}}, \forall i \in \mathbb{Z}$:
+  * $(F \circ \sigma)(x)_i = F(\sigma(x))_i = f(\sigma(x)_{[-i-r,i+r]}) = f(x_{[-i-r+1,i+r+1]})$
+  * $(\sigma \circ F)(x)_i = \sigma(F(x))_i = F(x)_{i+1} = f(x_{[-i-r+1,i+r+1]})$
+* $\Longleftarrow$
+  Sia $F:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}$ tale che $F$ è continua e commuta con lo shift.
+  Voglio dimostrare che esiste un AC tale che $F$ è la sua regola globale.
