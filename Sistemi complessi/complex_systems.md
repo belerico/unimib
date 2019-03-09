@@ -54,7 +54,6 @@ Una regola locale può essere fornita in forma tabellare (si pensi ad una funzio
 * r = 1
 * $f:A^3 \rightarrow A$ così definita:
 
-<center>
 | a | b | c | $f$ |
 |---|---|---|-----|
 | 0 | 0 | 0 | 0 |
@@ -65,7 +64,6 @@ Una regola locale può essere fornita in forma tabellare (si pensi ad una funzio
 | 1 | 0 | 1 | 1 |
 | 1 | 1 | 0 | 0 |
 | 1 | 1 | 1 | 1 |
-</center>
 
 Se $A = \{0, 1, 2, ..., n\} \subset \mathbb{N}$ e $A$ è finito, questa stessa regola locale può essere invece fornita come la conversione in base $|A|$ dell'ultima colonna di tale tabella, con la cifra più significativa in ultima posizione, ammesso che le combinazioni di possibili tuple siano fornite, in ordine, dalla più piccola alla più grande.
 Ovvero, data la funzione d'aggiornamento locale $f$, definiamo $n_f = \sum_{i=0}^{|A|^{2r+1}-1}a_i \cdot |A|^i$, con $a_i \in A$ elemento i-esimo della tabella.
@@ -100,15 +98,36 @@ Tali condizioni ci vengono fornite dal **teorema di Hedlund**:
 
 Dimostrazione:
 
-* $\Longrightarrow$
-  Suppongo $F$ sia la regola globale di un AC $\langle A,r,f \rangle$. Voglio dimostrare che $F$ è continua, ovvero $\forall x \in A^{\mathbb{Z}},\ F$ è **continua in x** se $\forall x \in A^{\mathbb{Z}}, \forall \epsilon > 0, \exists \delta > 0:\forall y \in A^{\mathbb{Z}}, d(x,y) < \delta \implies d(f(x), f(y)) < \epsilon$.
-  Scelti arbitrariamente $x \in A^{\mathbb{Z}}, \epsilon > 0$, allora esiste sempre un $n \in \mathbb{N}:\frac{1}{2^n} < \epsilon$.
-  Voglio dimostrare che $d(F(x),F(y)) < \frac{1}{2^n} < \epsilon$, che è come dimostare che $F(x_{[-n,n]})=F(y_{[-n,n]})$.
-  Dalla definizione di regola globale di un AC sappiamo che $F(x_{[-n,n]})$ dipende unicamente da $x_{[-n-r,n+r]}$. Dunque scegliendo $\delta = \frac{1}{2^{n+r}}$, per il teorema della distanza, si avrà che $x_{[-n-r,n+r]}=y_{[-n-r,n+r]} \iff d(x,y) < \delta = \frac{1}{2^{n+r}}$, dunque a maggior ragione vale che $x_{[-n,n]}=y_{[-n,n]}$ e quindi $F(x_{[-n,n]})=F(y_{[-n,n]})$.
-  $F$ è inoltre **uniformemente continua**, in quanto $\delta$ dipende da n e quindi da $\epsilon$, ma non da $x$.
+* $\Longrightarrow$  
+  Suppongo $F$ sia la regola globale di un AC $\langle A,r,f \rangle$.  
+  Voglio dimostrare che $F$ è continua, ovvero $\forall x \in A^{\mathbb{Z}},\ F$ è **continua in x** se $\forall x \in A^{\mathbb{Z}}, \forall \epsilon > 0, \exists \delta > 0:\forall y \in A^{\mathbb{Z}}, d(x,y) < \delta \implies d(f(x), f(y)) < \epsilon$.  
+  Scelti arbitrariamente $x \in A^{\mathbb{Z}}, \epsilon > 0$, allora esiste sempre un $n \in \mathbb{N}:\frac{1}{2^n} < \epsilon$.  
+  Voglio dimostrare che $d(F(x),F(y)) < \frac{1}{2^n} < \epsilon$, che è come dimostare che $F(x_{[-n,n]})=F(y_{[-n,n]})$.  
+  Dalla definizione di regola globale di un AC sappiamo che $F(x_{[-n,n]})$ dipende unicamente da $x_{[-n-r,n+r]}$.  
+  Dunque scegliendo $\delta = \frac{1}{2^{n+r}}$, per il teorema della distanza, si avrà che $x_{[-n-r,n+r]}=y_{[-n-r,n+r]} \iff d(x,y) < \delta = \frac{1}{2^{n+r}}$, dunque a maggior ragione vale che $x_{[-n,n]}=y_{[-n,n]}$ e quindi $F(x_{[-n,n]})=F(y_{[-n,n]})$.  
+  $F$ è inoltre **uniformemente continua**, in quanto $\delta$ dipende da n e quindi da $\epsilon$, ma non da $x$.  
   Dimostriamo ora che $F$ commuta con lo SHIFT, ovvero che $F \circ \sigma = \sigma \circ F$. Infatti, $\forall x \in A^{\mathbb{Z}}, \forall i \in \mathbb{Z}$:
   * $(F \circ \sigma)(x)_i = F(\sigma(x))_i = f(\sigma(x)_{[-i-r,i+r]}) = f(x_{[-i-r+1,i+r+1]})$
   * $(\sigma \circ F)(x)_i = \sigma(F(x))_i = F(x)_{i+1} = f(x_{[-i-r+1,i+r+1]})$
-* $\Longleftarrow$
+* $\Longleftarrow$  
   Sia $F:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}$ tale che $F$ è continua e commuta con lo shift.
-  Voglio dimostrare che esiste un AC tale che $F$ è la sua regola globale.
+  Vogliamo dimostrare che esiste un AC tale che $F$ è la sua regola globale.  
+  Sapendo che $A^{\mathbb{Z}}$ è un insieme [compatto](https://it.wikipedia.org/wiki/Spazio_compatto) e sapendo che $F$ è continua per ipotesi, allora per il teorema del regalo (ovvero il [teorema fi Heine-Cantor](https://it.wikipedia.org/wiki/Teorema_di_Heine-Cantor)), $F$ è uniformemente continua, ovvero: $\forall \epsilon > 0 \exists \delta > 0: \forall x,y \in A^{\mathbb{Z}}, d(x,y) < \delta \implies d(F(x), F(y)) < \epsilon$.  
+  Sia dunque $\epsilon = 1$, allora $d(F(x), F(y)) < 1 \iff F(x)_0 = F(y)_0$.  
+  Dunque, scelto un qualsiasi $r \in \mathbb{N}: \frac{1}{2^r} < \delta$ vale che $x_{[-r, r]} = y_{[-r, r]} \implies F(x)_0 = F(y)_0$.  
+  Definiamo ora $f:A^{2r+1} \rightarrow A | \forall u \in A^{2r+1}, f(u) = F(z)_0$ con $z \in A^{\mathbb{Z}}$ una qualunque stringa bi-infinita tale che $z_{[-r,r]} = u$.  
+  Dimostriamo ora che $\forall x \in A^{\mathbb{Z}}, \forall i \in \mathbb{Z}, F(x)_i = f(x_{[-i-r, i+r]})$, ovvero che F è regola globale.
+
+  1. $\forall x \in A^{\mathbb{Z}}, f(x_{[-r, r]}) = F(x)_0$ per  definizione di $f$
+  2. Sia $i \ne 0$, allora $F(x)_i = \sigma^i(F(x)_0) = F(\sigma^i(x))_0$ (avendo a priori dimostrato per induzione che $F \circ \sigma^k = \sigma^k \circ F$). Dunque $F(\sigma^i(x))_0 = f(\sigma^i(x_{[-r, r]})) = f(x_{[i-r,i+r]})$
+
+Dal teorema seguono i seguenti **corollari**:
+
+* Se $F:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}$ è la regola globale di un AC, allora $F^k$ è anch'essa la regola globale di un AC. Infatti avremo che $F^k \circ \sigma = F^{k-1} \circ F \circ \sigma = F^{k-1} \circ \sigma \circ F$, e iterando il processo k-1 volte si otterrà $\sigma \circ F \circ\ ...\ \circ F = \sigma \circ F^k$, dunque F commuta con lo shift; inoltre la composizione di funzioni continue è ancora una funzione continua, ergo F è la regola globale di un AC
+* Se $F,G:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}$, allora $F \circ G$ è la regola globale di un AC
+* Sia F la regola globale di un AC, dunque continua (uniformemente) e che commuta con lo shift, e supponiamo F sia invertibile. Essendo $A^{\mathbb{Z}}$ un insieme compatto, allora anche $F^{-1}$ è continua. Vale inoltre che $F \circ \sigma \circ F^{-1} = \sigma \circ F \circ F^{-1}$, dunque $F^{-1} \circ F \circ \sigma \circ F^{-1} = F^{-1} \circ \sigma \circ F \circ F^{-1} \equiv \text{Id} \circ \sigma \circ F^{-1} = F^{-1} \circ \sigma \circ \text{Id}$
+
+Diamo ora la seguente definizione:
+>$x \in A^{\mathbb{Z}}$ è **spazialmente periodica** $\iff \exists u \in A^k, k \in \mathbb{Z} : x = (...\ u u u u u u \ ...) = ^{\infty}u^{\infty}$, o in modo equivalente $\iff \exists k \in \mathbb{Z}, k \ne 0 : \sigma^k(x) = x$
+
+Dunque se $x \in A^{\mathbb{Z}}$ è spazialmente periodica, allora anche F(x) è spazialmente periodica. Infatti $F(x) = F(\sigma^k(x)) = \sigma^k(F(x))$, che è proprio la definizione di psazialità periodica.
