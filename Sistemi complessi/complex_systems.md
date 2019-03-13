@@ -29,8 +29,7 @@ Ad esempio, sia A = {0, 1}. Siano $x,y \in A^{\mathbb{Z}}$ tali che:
 dove al pedice sono rappresentate le posizioni delle celle, allora in questo caso $n = 3$, poiché $i = -3$ è la prima posizione (quella più piccola) in cui le due stringhe bi-infinite differiscono.
 
 Vale inoltre la seguente proposizione:
-> $$\forall x,y \in A^{\mathbb{Z}}, \forall n \in \mathbb{N},\ d(x,y) < \frac{1}{2^n} \Longleftrightarrow x_{[-n,\ n]} = y_{[-n,\ n]}$$
-> dove con $a_{[-n,\ n]} \subset a \in A^{\mathbb{Z}} = (a_{-n}\ a_{-n+1}\ ...\ a_{-2}\ a_{-1}\ a_0\ a_1\ a_2\ ...\ a_{n-1}\ a_n)$ si indica la "finestra" della stringa bi-infinita $a$, di raggio $n$ e centrata nello 0.
+> $$\forall x,y \in A^{\mathbb{Z}}, \forall n \in \mathbb{N},\ d(x,y) < \frac{1}{2^n} \Longleftrightarrow x_{[-n,\ n]} = y_{[-n,\ n]}$$ dove con $a_{[-n,\ n]} \subset a \in A^{\mathbb{Z}} = (a_{-n}\ a_{-n+1}\ ...\ a_{-2}\ a_{-1}\ a_0\ a_1\ a_2\ ...\ a_{n-1}\ a_n)$ si indica la "finestra" della stringa bi-infinita $a$, di raggio $n$ e centrata nello 0.
 
 Dimostrazione:
 
@@ -39,6 +38,8 @@ Dimostrazione:
 * $\Longleftarrow$
   Infatti $x_{[-n,\ n]} = y_{[-n,\ n]} \Longrightarrow \exists m \in \mathbb{N}, m > n : x_{-m} \ne y_{-m} \lor x_m \ne y_m$. Sia $\overline{m}$ il più piccolo tra essi, allora $d(x,y) = \frac{1}{2^{\overline{m}}} < \frac{1}{2^n}$
   Se tale $m$ non esiste allora $d(x,y) = 0 < \frac{1}{2^n}$.
+
+### Definizione
 
 >Definiamo dunque un **automa cellulare 1-D** come una tripla $\langle A, r, f\rangle$ tale che:
 >
@@ -54,16 +55,16 @@ Una regola locale può essere fornita in forma tabellare (si pensi ad una funzio
 * r = 1
 * $f:A^3 \rightarrow A$ così definita:
 
-| a | b | c | $f$ |
-|---|---|---|-----|
-| 0 | 0 | 0 | 0 |
-| 0 | 0 | 1 | 0 |
-| 0 | 1 | 0 | 0 |
-| 0 | 1 | 1 | 1 |
-| 1 | 0 | 0 | 1 |
-| 1 | 0 | 1 | 1 |
-| 1 | 1 | 0 | 0 |
-| 1 | 1 | 1 | 1 |
+    | a | b | c | $f$ |
+    |---|---|---|-----|
+    | 0 | 0 | 0 | 0 |
+    | 0 | 0 | 1 | 0 |
+    | 0 | 1 | 0 | 0 |
+    | 0 | 1 | 1 | 1 |
+    | 1 | 0 | 0 | 1 |
+    | 1 | 0 | 1 | 1 |
+    | 1 | 1 | 0 | 0 |
+    | 1 | 1 | 1 | 1 |
 
 Se $A = \{0, 1, 2, ..., n\} \subset \mathbb{N}$ e $A$ è finito, questa stessa regola locale può essere invece fornita come la conversione in base $|A|$ dell'ultima colonna di tale tabella, con la cifra più significativa in ultima posizione, ammesso che le combinazioni di possibili tuple siano fornite, in ordine, dalla più piccola alla più grande.
 Ovvero, data la funzione d'aggiornamento locale $f$, definiamo $n_f = \sum_{i=0}^{|A|^{2r+1}-1}a_i \cdot |A|^i$, con $a_i \in A$ elemento i-esimo della tabella.
@@ -72,8 +73,7 @@ Abbiamo detto che un AC evolve nel tempo in maniera uniforme, ovvero, per ogni i
 Definiamo dunque la **regola globale di un AC 1-D**:
 
 >Dato $\langle A,r,f \rangle$ AC, la **regola globale** è la funzione $F:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}, \forall x \in A^{\mathbb{Z}}, \forall i \in \mathbb{Z}$ 
->$$F(x)_i = f(x_{i-r},\ ...\ ,\ x_i,...\ ,\ x_{i+r}) = f(x_{[i-r, i+r]})$$
->dove $f(x_{[i-r, i+r]})$ al solito si intende la finestra della stringa $x$, di ampiezza $r$ e centrata in $i$
+$$F(x)_i = f(x_{i-r},\ ...\ ,\ x_i,...\ ,\ x_{i+r}) = f(x_{[i-r, i+r]})$$ dove $f(x_{[i-r, i+r]})$ al solito si intende la finestra della stringa $x$, di ampiezza $r$ e centrata in $i$
 
 L'applicazione di $F\ \forall i \in \mathbb{Z}$ è un aggiornamento dello stato di un AC di tipo:
 
@@ -84,12 +84,14 @@ L'applicazione di $F\ \forall i \in \mathbb{Z}$ è un aggiornamento dello stato 
 
 Definiamo ora una particolare funzione d'interesse, ovvero la funzione **SHIFT** (a sinistra):
 
->Dato un AC $\langle A,r,f \rangle$, la funzione $\text{SHIFT}:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}$ è tale che $\forall x \in A^{\mathbb{Z}}, \forall i \in \mathbb{Z}, \text{SHIFT}(x)_i = x_{i+1}$
+>La funzione $\text{SHIFT}:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}$ è tale che $\forall x \in A^{\mathbb{Z}}, \forall i \in \mathbb{Z}, \text{SHIFT}(x)_i = x_{i+1}$
 
 Possiamo dunque dare ora una definizione alternativa di AC, ovvero:
 
 >Un automa cellulare è una funzione $F:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}$ tale che $F$ è **continua** e $\text{SHIFT} \circ F = F \circ \text{SHIFT}$, ovvero si dice che **commuta con lo SHIFT**.
 La funzione SHIFT verrà indicata d'ora in avanti con il simbolo $\sigma$
+
+### Teorema di Hedlund
 
 E' naturale chiedersi a questo punto quali condizioni deve soddisfare una funzione $F:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}$ tale da essere la regola globale di un automa cellulare.
 Tali condizioni ci vengono fornite dal **teorema di Hedlund**:
@@ -112,7 +114,7 @@ Dimostrazione:
 * $\Longleftarrow$  
   Sia $F:A^{\mathbb{Z}} \rightarrow A^{\mathbb{Z}}$ tale che $F$ è continua e commuta con lo shift.
   Vogliamo dimostrare che esiste un AC tale che $F$ è la sua regola globale.  
-  Sapendo che $A^{\mathbb{Z}}$ è un insieme [compatto](https://it.wikipedia.org/wiki/Spazio_compatto) e sapendo che $F$ è continua per ipotesi, allora per il teorema del regalo (ovvero il [teorema fi Heine-Cantor](https://it.wikipedia.org/wiki/Teorema_di_Heine-Cantor)), $F$ è uniformemente continua, ovvero: $\forall \epsilon > 0 \exists \delta > 0: \forall x,y \in A^{\mathbb{Z}}, d(x,y) < \delta \implies d(F(x), F(y)) < \epsilon$.  
+  Sapendo che $A^{\mathbb{Z}}$ è un insieme [compatto](https://it.wikipedia.org/wiki/Spazio_compatto) e sapendo che $F$ è continua per ipotesi, allora per il teorema del regalo (ovvero il [teorema di Heine-Cantor](https://it.wikipedia.org/wiki/Teorema_di_Heine-Cantor)), $F$ è uniformemente continua, ovvero: $\forall \epsilon > 0 \exists \delta > 0: \forall x,y \in A^{\mathbb{Z}}, d(x,y) < \delta \implies d(F(x), F(y)) < \epsilon$.  
   Sia dunque $\epsilon = 1$, allora $d(F(x), F(y)) < 1 \iff F(x)_0 = F(y)_0$.  
   Dunque, scelto un qualsiasi $r \in \mathbb{N}: \frac{1}{2^r} < \delta$ vale che $x_{[-r, r]} = y_{[-r, r]} \implies F(x)_0 = F(y)_0$.  
   Definiamo ora $f:A^{2r+1} \rightarrow A | \forall u \in A^{2r+1}, f(u) = F(z)_0$ con $z \in A^{\mathbb{Z}}$ una qualunque stringa bi-infinita tale che $z_{[-r,r]} = u$.  
@@ -128,6 +130,61 @@ Dal teorema seguono i seguenti **corollari**:
 * Sia F la regola globale di un AC, dunque continua (uniformemente) e che commuta con lo shift, e supponiamo F sia invertibile. Essendo $A^{\mathbb{Z}}$ un insieme compatto, allora anche $F^{-1}$ è continua. Vale inoltre che $F \circ \sigma \circ F^{-1} = \sigma \circ F \circ F^{-1}$, dunque $F^{-1} \circ F \circ \sigma \circ F^{-1} = F^{-1} \circ \sigma \circ F \circ F^{-1} \equiv \text{Id} \circ \sigma \circ F^{-1} = F^{-1} \circ \sigma \circ \text{Id}$
 
 Diamo ora la seguente definizione:
->$x \in A^{\mathbb{Z}}$ è **spazialmente periodica** $\iff \exists u \in A^k, k \in \mathbb{Z} : x = (...\ u u u u u u \ ...) = ^{\infty}u^{\infty}$, o in modo equivalente $\iff \exists k \in \mathbb{Z}, k \ne 0 : \sigma^k(x) = x$
+>$x \in A^{\mathbb{Z}}$ è **spazialmente periodica** $\iff \exists u \in A^k, k \in \mathbb{N} : x = (...\ u u u u u u \ ...) = ^{\infty}u^{\infty}$, o in modo equivalente $\iff \exists k \in \mathbb{N}, k \ne 0 : \sigma^k(x) = x$
 
-Dunque se $x \in A^{\mathbb{Z}}$ è spazialmente periodica, allora anche F(x) è spazialmente periodica. Infatti $F(x) = F(\sigma^k(x)) = \sigma^k(F(x))$, che è proprio la definizione di psazialità periodica.
+Dunque se $x \in A^{\mathbb{Z}}$ è spazialmente periodica, allora anche F(x) è spazialmente periodica. Infatti $F(x) = F(\sigma^k(x)) = \sigma^k(F(x))$, che è proprio la definizione di spazialità periodica.  
+
+### Connessione con automi a stati finiti
+
+Esiste una stretta connessione tra gli AC e gli FSA (Finite State Automata), ed è la seguente: ogni cella di un AC può essere vista come un singolo automa a stati finiti, collegato con tanti suoi vicini, a destra e a sinistra di esso, quanto è ampio il raggio; dunque se r = 1, allora ogni automa sarà collegato al suo immediato vicino a destra e a sinistra, se r = 2 allora sarà collegato al primo e al secondo vicino a destra e a sinistra e così via.
+Dunque, la *funzione di transizione* $\delta: Q \times \Sigma \rightarrow Q$ di ogni FSA corrisponde alla regola locale $f:A \times A^{2r} \rightarrow A$ dell'AC.
+Risulta intuitivo che, avendo a disposizione un'infinità numerabile di automi a stati finiti che si aggiornano in parallelo, la potenza espressiva degli AC risulti essere maggiore rispetto a quella degli automi a stati finiti: non per altro, la regola $n_f = 110$ riesce a simulare una *MdT universale*, per questo motivo gli AC sono considerati in questo senso *universali*.
+
+### Proprietà degli automi cellulari
+
+Le proprietà di un AC che andremo ad analizzare saranno:
+
+* **Iniettività**, che implica il fatto che le orbite non collassino (dove per orbite penso si intenda una sequenza di applicazioni della regola globale F: $x \mapsto F(x) \mapsto F^2(x) \mapsto F^3(x) \mapsto ... $)
+* **Suriettività**, che implica la raggiungibilità di un AC
+* **Biettività**, che implica la reversibilità di un AC, ovvero $\exists F^{-1}$ e $F^{-1}$ è ancora un AC (il che è vero per il teorema di Hedlund); da non confondersi con l'invertibilità, in cui ci si chiede solo se esiste $F^{-1}$
+* **Stabilità**
+
+#### Suriettività
+
+Si ricorda la definizione di suriettività:
+> Una funzione $f : A \rightarrow B$ è **suriettiva** $\iff \forall y \in B, \exists x \in A: y = f(x)$, oppure tale che $F(A) = B$, oppure ancora $\forall y \in B, F^{-1}(y) \ne \emptyset$
+
+Definiamo ora un particolare tipo di grafo che ci permetterà in seguito di analizzare le proprietà di nostro interesse (quanto meno per gli AC 1-D), e dunque di associare alla loro analisi un algoritmo.
+> Il **grafo di de Bruijin** associato ad un AC 1-D $\langle A, r, f \rangle$ è un grafo G = (V, E) etichettato tale che:
+> * $V = A^{2r}$
+> * $(u, v) \in E \iff u,v \in V \land u_2u_3...u_{2r} = v_1v_2...v_{2r-1}$
+> * $f(uv_{2r}) = f(u_1v)$ è la label dell'arco (u, v)
+
+Prendendo come esempio la regola $n_f = 110$ avremo:
+
+| a | b | c | $f$ |
+|---|---|---|-----|
+| 0 | 0 | 0 | 0 |
+| 0 | 0 | 1 | 1 |
+| 0 | 1 | 0 | 1 |
+| 0 | 1 | 1 | 1 |
+| 1 | 0 | 0 | 0 |
+| 1 | 0 | 1 | 1 |
+| 1 | 1 | 0 | 1 |
+| 1 | 1 | 1 | 0 |
+
+```dot
+digraph G {
+    rankdir="LR"
+    00 -> 00 [ label="0" ];
+    00 -> 01 [ label="1" ];
+    01 -> 11 [ label="1" ];
+    11 -> 11 [ label="0" ];
+    11 -> 10 [ label="1" ];
+    10 -> 00 [ label="0" ];
+    10 -> 01 [ label="1" ];
+    01 -> 10 [ label="1" ];
+}
+```
+Avendo definito cosa è il grafo di de Bruijin G associato ad un AC, ora le stringhe bi-infinite $x \in A^{\mathbb{Z}}$, prese a [bi-grammi](https://en.wikipedia.org/wiki/N-gram), possono essere viste come *cammini sui vertici di G*: ad esempio se $x = (...\ 0010111001010 \ ...)$, allora la sequenza $\pi = \langle 00, 01, 10, 01, 11, 11, 10, ... \rangle$ è il cammino sui vertici di G.
+Data la x sopra definita, $F(x) = (...\ 111101 \ ...)$ si può invece vedere come un *cammino sugli archi di G*
