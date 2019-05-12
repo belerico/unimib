@@ -112,6 +112,7 @@ if __name__ == "__main__":
         [0,1,0,0], # A
         [1,1,1,0]  # J
     ])
+    # Variables in topological order
     variables = ['H', 'W', 'A', 'J']
     cpts = [
         [0.2], # P(H)
