@@ -1,5 +1,7 @@
 import numpy
 import random
+import operator
+from functools import reduce
 from operator import itemgetter
 from itertools import accumulate
 from collections.abc import Iterable
@@ -33,6 +35,9 @@ class assignment3():
               then cpts[3] = [0.1, 0.6, 0.3, 0.5, 0.95, 0.95, 0.95, 0.95]
         evidence: dict of variable:value
         """
+        # Check that adj is a square matrix
+        assert(reduce(operator.and_, [len(row) == len(adj) for row in adj]) == True)
+        assert(len(adj) == len(variables) == len(cpts))
         self.adj = adj
         self.variables = variables
         self.cpts = cpts
@@ -82,7 +87,7 @@ class assignment3():
                 x[i] = evidences[var]
                 row_cpt = 0
                 if parents.size > 0:
-                    # Get the parents in topological order
+                    # Get the parents values in topological order
                     parents_values = x[parents]
                     # Get index of the cpt row
                     # To do that, knowing that cpts are stored as previously specified
@@ -94,7 +99,7 @@ class assignment3():
             except KeyError:
                 row_cpt = 0
                 if parents.size > 0:
-                    # Get the parents in topological order
+                    # Get the parents values in topological order
                     parents_values = x[parents]
                     # Get index of the cpt row
                     row_cpt = int(''.join(str(i) for i in parents_values), 2)
