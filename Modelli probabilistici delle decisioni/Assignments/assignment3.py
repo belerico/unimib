@@ -12,10 +12,7 @@ class assignment3():
         self,
         adj: numpy.ndarray, 
         variables: list, 
-        cpts: list, 
-        seed=42, 
-        *args, 
-        **kwargs
+        cpts: list
     ):
         """
         adj: adj matrix as numpy array. adj[i, j] = 1 iff exists a directed edge from node j to node i
