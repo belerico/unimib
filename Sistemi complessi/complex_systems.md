@@ -187,4 +187,7 @@ digraph G {
 }
 ```
 Avendo definito cosa è il grafo di de Bruijin G associato ad un AC, ora le stringhe bi-infinite $x \in A^{\mathbb{Z}}$, prese a [bi-grammi](https://en.wikipedia.org/wiki/N-gram), possono essere viste come *cammini sui vertici di G*: ad esempio se $x = (...\ 0010111001010 \ ...)$, allora la sequenza $\pi = \langle 00, 01, 10, 01, 11, 11, 10, ... \rangle$ è il cammino sui vertici di G.
-Data la x sopra definita, $F(x) = (...\ 111101 \ ...)$ si può invece vedere come un *cammino sugli archi di G*
+Data la x sopra definita, $F(x) = (...\ 111101 \ ...)$ si può invece vedere come un *cammino sugli archi di G*.
+E' facile vedere come il mapping tra un cammino sui vertici $\pi$ e x sia biunivoco, e dunque F(x) è il cammino associato univocamente a $\pi$.
+Dunque chiedersi se se F è suriettiva, ovvero $F(A^{\mathbb{Z}}) = A^{\mathbb{Z}}$, equivale a chiedersi se F(x) la posso vedere come un cammino sugli archi del grafo di de Bruijin associato all'automa.
+Se ciò vale, allora per forza $\exists x \in A^{\mathbb{Z}}|F(x) = y, \forall y \in A^{\mathbb{Z}}$, per la biunivocità tra x e il cammino $\pi$.
