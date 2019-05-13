@@ -125,20 +125,22 @@ class assignment3():
 
 if __name__ == "__main__":
     adj = numpy.array([
-       # H W A J
-        [0,0,0,0], # H
-        [0,0,0,0], # W
-        [0,1,0,0], # A
-        [1,1,1,0]  # J
+       # B M I G J
+        [0,0,0,0,0], # B
+        [0,0,0,0,0], # M
+        [1,1,0,0,0], # I
+        [1,1,1,0,0], # G
+        [0,0,0,1,0]  # J
     ])
     # Variables in topological order
-    variables = ['H', 'W', 'A', 'J']
+    variables = ['B', 'M', 'I', 'G', 'J']
     cpts = [
-        [0.2], # P(H)
-        [0.5], # P(W)
-        [0.3, 0.1], # P(A|W)
-        [0.1, 0.6, 0.3, 0.5, 0.95, 0.95, 0.95, 0.95] # P(J|H,W,A)
+        [0.9], # P(B)
+        [0.1], # P(M)
+        [0.1, 0.5, 0.5, 0.9], # P(I|B,M)
+        [0, 0, 0.1, 0.2, 0, 0, 0.8, 0.9], # P(G|B,M,I)
+        [0, 0.9] # P(J|G)
     ]
-    evidences = {'A':1}
+    evidences = {'B':1, 'M':1, 'I':1}
     ass3 = assignment3(variables, adj, cpts)
     print(ass3.likelihood_weighting(50000, 'J', evidences))
