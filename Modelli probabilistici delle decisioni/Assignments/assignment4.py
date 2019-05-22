@@ -63,12 +63,12 @@ P = numpy.matrix([
     [.5, 0, 0, 0, .5],
     [.5, 0, 0, 0, .5]]
 )
-print('Matrice delle probabilità di transizione', P)
+print('Matrice delle probabilità di transizione\n', P)
 
 # 2) Matrice delle probabilità di transizione a due step
 P_2 = P ** 2
-print('Matrice delle probabilità di transizione a due step', P_2)
+print('Matrice delle probabilità di transizione a due step\n', P_2)
 
 # 3) Calcolare la distribuzione stazionaria
-print(stationary_dist(P, 'naive'))
+print('Distribuzione stazionaria\n', stationary_dist(P, 'naive'))
 
