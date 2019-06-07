@@ -70,5 +70,5 @@ P_2 = P ** 2
 print('Matrice delle probabilità di transizione a due step\n', P_2)
 
 # 3) Calcolare la distribuzione stazionaria
-print('Distribuzione stazionaria\n', stationary_dist(P, 'naive'))
+print('Distribuzione stazionaria\n', stationary_dist(P, 'linear'))
 
