@@ -1,8 +1,8 @@
 clear all;
 close all;
 
-flash = im2double(imread('cakeFlash.jpg'));
-no_flash = im2double(imread('cakeNo-flash.jpg'));
+flash = im2double(imread('giantShadowFlash.jpg'));
+no_flash = im2double(imread('giantShadowNo-flash.jpg'));
 
 figure(1), clf
 hold on
@@ -12,7 +12,7 @@ hold off
 
 figure(2), clf
 hold on
-imshow(flashPhotographyEnhancement(flash, no_flash, 'non_linear', 'log'));
+imshow(flashPhotographyEnhancement(flash, no_flash, 'ycbcr', 'log'));
 hold off
 
 %% Function implementing the paper
@@ -35,10 +35,10 @@ function out=flashPhotographyEnhancement(flash, no_flash, intensity, rescaling)
         I_nf = sum(weights .* no_flash, 3);
     elseif strcmp(intensity,'ycbcr')
         I_f = rgb2ycbcr(flash);
-        I_f = mat2gray(I_f(:, :, 1));
+        I_f = I_f(:, :, 1);
 
         I_nf = rgb2ycbcr(no_flash);
-        I_nf = mat2gray(I_nf(:, :, 1));
+        I_nf = I_nf(:, :, 1);
     elseif strcmp(intensity,'hsv')
         I_f = rgb2hsv(flash);
         I_f = mat2gray(I_f(:, :, 3));
@@ -59,21 +59,23 @@ function out=flashPhotographyEnhancement(flash, no_flash, intensity, rescaling)
         c = 1 / log10(2);
         I_f = c .* log10(I_f + 1);
         I_nf = c .* log10(I_nf + 1);
-        % 
-        % LS_f = bfilter2(I_f, 1, [0.015 * diag_len 0.4]);
-        % LS_nf = bfilter2(I_nf, 1, [0.015 * diag_len 0.4]);
-        %  
-        % LS_f = imbilatfilt(I_f, 0.4, 0.015 * diag_len);
-        % LS_nf = imbilatfilt(I_nf, 0.4, 0.015 * diag_len);
-        % 
+        
+%         LS_f = bfilter2(I_f, 1, [0.015 * diag_len 0.4]);
+%         LS_nf = bfilter2(I_nf, 1, [0.015 * diag_len 0.4]);
+%          
+%         LS_f = imbilatfilt(I_f, 0.4, 0.015 * diag_len);
+%         LS_nf = imbilatfilt(I_nf, 0.4, 0.015 * diag_len);
+%         
         [ LS_f , ~ ]  =  shiftableBF(I_f, 0.015 * diag_len, 0.4);
         [ LS_nf , ~ ]  =  shiftableBF(I_nf, 0.015 * diag_len, 0.4);
 
         %% Compute details
 
         D_f = mat2gray(I_f - LS_f);
-        % D_nf = mat2gray(I_nf - LS_nf);
-        out=im2double(C_f .* I_f .* mat2gray(D_f + LS_nf));
+        
+        %% Output
+        
+        out=C_f .* I_f .* mat2gray(D_f + LS_nf);
     elseif strcmp(rescaling,'')
 %         LS_f = bfilter2(I_f, 1, [0.015 * diag_len 0.4]);
 %         LS_nf = bfilter2(I_nf, 1, [0.015 * diag_len 0.4]);
@@ -85,7 +87,9 @@ function out=flashPhotographyEnhancement(flash, no_flash, intensity, rescaling)
         [ LS_nf , ~ ]  =  shiftableBF(I_nf, 0.015 * diag_len, 0.4);
 
         D_f = I_f ./ LS_f;
-        % D_nf = I_nf ./ LS_nf;
+        
+        %% Output
+        
         out=C_f .* D_f .* LS_nf;
     end
 end
